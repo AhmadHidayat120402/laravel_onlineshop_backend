@@ -22,6 +22,8 @@ class UserSeeder extends Seeder
             'name' => 'Admin Dayat',
             'email' => 'dayatfic12@gmail.com',
             'password' => Hash::make('12345678'),
+            'phone' => '085676543345',
+            'roles' => 'ADMIN'
         ]);
     }
 }
