@@ -34,19 +34,24 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $filename = time() . '.' . $request->image->extension();
-        $request->image->storeAs('public/products', $filename);
+        if ($request->hasFile('image')) {
+            $filename = time() . '.' . $request->image->extension();
+            $request->image->storeAs('public/products', $filename);
 
-        $product = new Product;
-        $product->name = $request->name;
-        $product->price = (int) $request->price;
-        $product->stock = (int) $request->stock;
-        $product->category_id = $request->category_id;
-        $product->image = $filename;
-        $product->save();
+            $product = new Product;
+            $product->name = $request->name;
+            $product->price = (int) $request->price;
+            $product->stock = (int) $request->stock;
+            $product->category_id = $request->category_id;
+            $product->image = $filename;
+            $product->save();
 
-        return redirect()->route('product.index');
+            return redirect()->route('product.index');
+        } else {
+            return back()->withInput()->withErrors(['image' => 'Harap unggah gambar.']);
+        }
     }
+
 
     /**
      * Display the specified resource.
